@@ -1,0 +1,258 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont,  'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #18191a;
+  color: #ced1d5
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+#form{
+  width: 50vw;
+  min-width: 300px;
+  max-width: 500px;
+  justify-content: center;
+  align-content: center;
+  padding-top: 10%;
+  padding-bottom: 10%;
+  position: relative;
+}
+/* #loginrow{
+  position: absolute;
+  top: 40vh;
+}
+#login-root{
+  display: flex;
+  justify-content: center;
+} */
+#tsparticles{
+  position: absolute;
+  top: 0px
+}
+#account{
+  display: block;
+  font-size: 2rem;
+  margin-left: 0;
+  margin-right: 0;
+}
+#accbtn{
+  margin-left: 1rem;
+  padding: 1px 1px;
+  border: 0px;
+}
+#header{
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  /* top: 10px; */
+  bottom: 1rem;
+  padding: 2vh;
+  font-size: 3rem;
+  color: white;
+}
+ion-icon {
+  font-size: 20px;
+  margin-right: 5px;
+}
+#userpic{
+  height: max-content;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  /* margin: 0.3rem; */
+  border-radius: 50%;
+  /* width: 3rem; */
+}
+#sub{
+  justify-content: center;
+  width: 100%;
+}
+#message{
+  width: fit-content;
+  max-width: 60vw;
+  /* float: right; */
+}
+#messageself{
+  width: fit-content;
+  max-width: 60vw;
+  /* float: right; */
+}
+#messages{
+  overflow: auto;
+  top: 2vh;
+  bottom: 2vh;
+  width: 50vw;
+  height: 70vh;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  align-content: center;
+
+}
+#input{
+  top: 3rem;
+  width: 50vw;
+  justify-content: center;
+  align-content: center;
+  position: relative;
+
+}
+#row{
+  bottom: 10px;
+}
+@media only screen and (max-width: 1000px) {
+  #navlogo {
+    font-size: 2rem !important;
+  }
+  #form{
+    top: 100pt;
+    width: 80vw;
+  }
+  #input{
+    min-width: 100%;
+    width: 100%;
+  }
+  #messages{
+    min-width: 100%;
+    width: 100%;
+  }
+}
+#navlogo{
+  font-size: 3rem;
+  font-weight: 150 !important;
+  color: white;
+}
+#nav{
+  background-color: #242526;
+  border-bottom: 1px solid #393a3b;
+}
+#file {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+#filebtn{
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+}
+.row{
+  margin-right: 0;
+  margin-left: 0;
+}
+#interface{
+  max-width: 100% !important;
+}
+#myInput{
+  background-color: #3e4042;
+  color: #e5e5e5;
+  border: none;
+}
+.sidebar{
+  color: #b0b3b8;
+  margin-top: 2rem;
+  max-width: 70vw;
+  /* padding-left: 15px;
+  padding-right: 15px; */
+}
+#msgpic{
+  max-width: 100%;
+  max-height: 30vh;
+  border-radius: 0.5rem;
+  top: 5vh;
+}
+.input-group-append{
+  z-index: 0;
+}
+#fullpic{
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+  border-radius: 0.5rem;
+}
+
+#login{
+  margin-top: 1rem;
+}
+#self{
+  display: flex;
+  justify-content: flex-end !important;
+}
+#joinc{
+  width:48%;
+}
+#ahref{
+  display: flex;
+  justify-content: center;
+  padding-top: 1vh;
+}
+.modal-content{
+  background-color: #242526;
+  border: 1px solid #393a3b;
+  color: white;
+  border-radius: 0.5rem;
+}
+.modal-header{
+  background-color: #18191a;
+  border-bottom: 1px solid #393a3b!important;
+}
+.modal-footer{
+  border-top: 1px solid #393a3b!important;;
+}
+.fullview{
+  background-color: none!important;
+}
+.modal-dialog{
+  background-color: none!important;
+}
+#modal{
+  justify-content: center;
+}
+.close{
+  color: white
+}
+body.modal-open #root{
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+.alert-secondary{
+  background-color: #737678;
+  border: none;
+  color: white;
+}
+.alert-primary{
+  background-color: #57a6f9;
+  border: none;
+  border-radius: 0.5rem;
+}
+.kep-login-facebook{
+  width: 100%;
+  font-family: unset!important;
+  font-weight: unset!important;
+  text-transform: none!important;
+  margin-top: 1rem;
+  border-radius: 0.25rem!important;
+  padding: 0.375rem 0.75rem!important;
+}
+#grupy{
+  max-height: 50vh;
+  overflow: auto;
+  display: block;
+}
+.toast-body{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
