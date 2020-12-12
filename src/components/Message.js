@@ -14,13 +14,15 @@ export class Message extends Component {
 
   render() {
     if (this.props.pic === true) {
+      //jesli wiadomosc to obrazek
       return (
         <div>
-          {this.props.username === this.props.author && (
+          {this.props.username === this.props.author ? (
+            //renderowanie warunkowe jesli wiadomosc jest swoja
             <div id="self">
               <Alert id="messageself" variant="primary">
                 <Suspense fallback={<Loading />}>
-                  <div id="msgtxt">{this.props.author}:</div>{" "}
+                  <div id="msgtxt">{this.props.author}:</div>
                   <Image
                     alt={this.props.id}
                     onClick={() => {
@@ -33,6 +35,7 @@ export class Message extends Component {
                 </Suspense>
               </Alert>
               {this.props.userpic && (
+                //czy uzytkownik ma awatar
                 <img
                   alt={this.props.author}
                   id="userpic"
@@ -40,8 +43,7 @@ export class Message extends Component {
                 />
               )}
             </div>
-          )}
-          {this.props.username !== this.props.author && (
+          ) : (
             <div>
               {this.props.userpic && (
                 <img
@@ -56,7 +58,7 @@ export class Message extends Component {
                   <Image
                     alt={this.props.id}
                     onClick={() => {
-                      this.setState({ fullview: true });
+                      this.setState({ fullview: true }); // po kliknieciu pokaz na pelnym ekranie
                     }}
                     loading="lazy"
                     id="msgpic"
@@ -66,7 +68,7 @@ export class Message extends Component {
               </Alert>
             </div>
           )}
-          <FullView
+          <FullView //widok pelnoekranowy zdjecia
             show={this.state.fullview}
             onHide={() => this.setState({ fullview: false })}
             pic={this.props.message}
@@ -75,8 +77,9 @@ export class Message extends Component {
       );
     } else
       return (
+        //jesli wiadomosc to tekst
         <div>
-          {this.props.username === this.props.author && (
+          {this.props.username === this.props.author ? (
             <div id="self">
               <Alert id="messageself" variant="primary">
                 {this.props.author}: {this.props.message}
@@ -89,8 +92,7 @@ export class Message extends Component {
                 />
               )}
             </div>
-          )}
-          {this.props.username !== this.props.author && (
+          ) : (
             <div style={{ display: "flex" }}>
               {this.props.userpic && (
                 <img

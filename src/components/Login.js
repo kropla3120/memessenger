@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Alert from "react-bootstrap/Alert";
+import { Form, Button, Alert } from "react-bootstrap";
 import Particles from "react-particles-js";
 
 export class Login extends Component {
@@ -18,6 +16,7 @@ export class Login extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick() {
+    // przekazanie wartosci wyzej
     if (this.state.register === true) {
       this.props.register(
         this.state.email,
@@ -32,7 +31,7 @@ export class Login extends Component {
   render() {
     return (
       <div>
-        <Particles
+        <Particles // tlo na ekranie logowania
           params={{
             particles: {
               number: {
@@ -50,6 +49,7 @@ export class Login extends Component {
         <div className="row justify-content-md-center">
           <div id="form" className="container">
             <h1 id="header">{this.state.register ? "Sign up" : "Log in"}</h1>
+            {/* jesli wystapi blad pokaz alert */}
             {this.props.valid === false && (
               <Alert id="connection" variant="danger">
                 {this.props.err}
@@ -79,6 +79,7 @@ export class Login extends Component {
                   type="password"
                   placeholder="Password"
                 />
+                {/* jesli rejestracja to dodaj pole do nazwy uzytkonika */}
                 {this.state.register && (
                   <Form.Control
                     id="login"
@@ -97,6 +98,7 @@ export class Login extends Component {
               </Form.Group>
               <Button id="sub" variant="primary" onClick={this.handleClick}>
                 {this.state.register ? "Register" : "Login"}
+                {/* renderowanie warunkowe wybor rejestracji lub logowania   */}
               </Button>
               <Button
                 id="sub"
@@ -112,7 +114,7 @@ export class Login extends Component {
                 Login with Facebook
               </Button>
             </Form>
-
+            {/* renderowanie warunkowe przycisk login lub register */}
             {this.state.register ? (
               <a
                 id="ahref"

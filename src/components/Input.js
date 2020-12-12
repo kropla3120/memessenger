@@ -8,15 +8,16 @@ export class Input extends Component {
   constructor() {
     super();
     this.state = {
-      message: "",
-      selectedFile: null,
-      loaded: 0,
+      message: "", // tresc aktualnej wiadomosci
+      selectedFile: null, // zaznaczony plik
+      loaded: 0, // progress
     };
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick() {
     const db = this.props.db;
     var data = {
+      // obiekt wiadomosci
       content: this.state.message,
       author: this.props.username,
       id: Date.now(),
@@ -25,6 +26,7 @@ export class Input extends Component {
     };
     var thisc = this;
     if (data.content === "/clear") {
+      // jesli wpisano /clear wyczysc wiadomosci z bazy danych
       db.collection("rooms")
         .doc(this.props.room)
         .collection("messages")
@@ -36,7 +38,7 @@ export class Input extends Component {
           thisc.props.clear();
         });
     } else {
-      db.collection("rooms")
+      db.collection("rooms") // wyslij wiadomosc do bazy danych
         .doc(this.props.room)
         .collection("messages")
         .doc("message_" + Date.now())
@@ -47,31 +49,32 @@ export class Input extends Component {
 
   uploadFile = (file) => {
     this.setState({
+      // aktualizacja state
       selectedFile: file,
       loaded: 0,
     });
     const db = this.props.db;
     const input = this;
-    const storageRef = this.props.storage.ref("content/");
+    const storageRef = this.props.storage.ref("content/"); // odnosnik do bazy danych
     var filename = Date.now() + file.name;
     var path = storageRef.child(filename);
     var uploadTask = path.put(file);
     uploadTask.on(
+      //wysylanie obrazka do chmury
       "state_changed",
       function (snapshot) {
-        // Observe state change events such as progress, pause, and resume
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        input.setState({ loaded: progress });
+        input.setState({ loaded: progress }); // aktualizacja progresu
       },
       function (error) {
-        // Handle unsuccessful uploads
+        // blad w przesylaniu
       },
       function () {
-        // Handle successful uploads on complete
+        // przesylanie poprawne
         input.setState({ selectedFile: null });
         uploadTask.snapshot.ref.getDownloadURL().then(function (url) {
           var picdata = {
+            // obiekt wiadomosci
             content: url,
             author: input.props.username,
             id: Date.now(),
@@ -79,7 +82,7 @@ export class Input extends Component {
             room: input.props.room,
             userpic: input.props.userpic,
           };
-          db.collection("rooms")
+          db.collection("rooms") // wstawienie do bazy danych wiadomosci z obrazkiem
             .doc(input.props.room)
             .collection("messages")
             .doc("message_" + Date.now())
@@ -87,23 +90,6 @@ export class Input extends Component {
         });
       }
     );
-    // .then((snapshot) => {
-    //   path.getDownloadURL().then((url) => {
-    //     var picdata = {
-    //       content: url,
-    //       author: input.props.username,
-    //       id: Date.now(),
-    //       pic: true,
-    //       room: input.props.room,
-    //       userpic: this.props.userpic,
-    //     };
-    //     db.collection("rooms")
-    //       .doc(input.props.room)
-    //       .collection("messages")
-    //       .doc("message_" + Date.now())
-    //       .set(picdata);
-    //   });
-    // });
   };
 
   componentDidUpdate() {}
@@ -117,12 +103,12 @@ export class Input extends Component {
           <InputGroup className="mb-3">
             <FormControl
               onChange={(e) => {
-                this.setState({ message: e.target.value });
+                this.setState({ message: e.target.value }); //aktualizacja state z trescia wiadomosci
               }}
               value={this.state.message}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  this.handleClick();
+                  this.handleClick(); // wiadomosc po kliknieciu enter
                 }
               }}
               onSubmit={this.handleClick}
@@ -137,15 +123,15 @@ export class Input extends Component {
                 id="file"
                 className="btn"
                 onChange={(event) => {
-                  this.uploadFile(event.target.files[0]);
+                  this.uploadFile(event.target.files[0]); // funkcja do przeslania pliku
                 }}
               />
               <label id="filebtn" className="btn btn-primary" htmlFor="file">
                 <ion-icon style={{ marginRight: 0 }} name="image"></ion-icon>
               </label>
-              <Button
+              <Button // przycisk send
                 style={{ display: "flex", alignItems: "center" }}
-                onClick={this.handleClick}
+                onClick={this.handleClick} // wiadomosc po kliknieciu w przycisk
                 variant="primary"
               >
                 <ion-icon style={{ marginRight: 0 }} name="send"></ion-icon>
@@ -155,6 +141,7 @@ export class Input extends Component {
         </div>
         <div>
           {this.state.selectedFile && <ProgressBar now={this.state.loaded} />}
+          {/* jesli jest plik pokaz progres */}
         </div>
       </div>
     );

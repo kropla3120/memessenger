@@ -3,12 +3,14 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
+import "firebase/messaging";
 import "react-bootstrap";
 import Login from "./components/Login";
 import Interface from "./components/Interface";
 import { isMobile } from "react-device-detect";
 
 const firebaseConfig = {
+  //konfiguracja projektu firebase
   apiKey: "AIzaSyBX-Yk-BKl0TsHjkTgQo2GeM9cl-4H_IbQ",
   authDomain: "memessenger-578e5.firebaseapp.com",
   databaseURL: "https://memessenger-578e5.firebaseio.com",
@@ -19,8 +21,12 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
+const messaging = firebase.messaging();
 var storage = firebase.storage();
 var provider = new firebase.auth.FacebookAuthProvider();
+messaging.usePublicVapidKey(
+  "BA3_8NAH-mcmZ3XExCxm_-Y-Frr6df87DmLhehR10IfyBpZKLnC8afb56jgcCPLuH0_lXEj0fdr_6ZE_KdAMKks"
+);
 
 class App extends Component {
   constructor() {
@@ -48,10 +54,12 @@ class App extends Component {
       .auth()
       .signOut()
       .then(() => {
+        //wylogowano
         console.log("signed out");
       })
       .catch(function (error) {
-        // An error happened.
+        // blad
+        console.error(error);
       });
   }
   handleLogin(email, password) {
@@ -64,6 +72,7 @@ class App extends Component {
           .auth()
           .signInWithEmailAndPassword(email, password)
           .catch(function (error) {
+            // nie ma potrzeby aktualizacji state o uzytkowniku poniewaz funkcja w componentdidmount to zrobi
             app.setState({ valid: false, error: error.message });
           });
       });
@@ -73,56 +82,50 @@ class App extends Component {
     this.setState({ register: true });
     firebase
       .auth()
-      .createUserWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(email, password) // rejestracja
       .then((e) => {
         if (e.user) {
           db.collection("rooms")
             .doc("default")
             .update({
-              users: firebase.firestore.FieldValue.arrayUnion(e.user.uid),
+              users: firebase.firestore.FieldValue.arrayUnion(e.user.uid), // dodanie nowo utworzonego uzytkownika do domyslnego pokoju
             });
-          e.user.updateProfile({ displayName: usernameinput });
+          e.user.updateProfile({ displayName: usernameinput }); // zaktualizowanie nazwy uzytkownika
           sessionStorage.setItem("islogged", true);
           app.setState({
+            // wczytanie informacji o uzytkowniku do state
             islogged: true,
             username: usernameinput,
             userid: e.user.uid,
             userpic: e.user.photoURL,
           });
-          app.refs.interface.getRoomsOnAuth(e.user);
+          app.refs.interface.getRoomsOnAuth(e.user); // wywoalnie funkcji do zaladowania pokoji uzytkownika
         } else {
         }
       })
       .catch(function (error) {
-        app.setState({ valid: false, error: error.message });
+        app.setState({ valid: false, error: error.message }); // wyswietlenie bledow
       });
   }
   handleFbLogin() {
     const app = this;
     let fbauth;
     if (isMobile) {
+      // jesli na telefonie logowanie przez fb musi byc poprzez przekierowanie
       fbauth = firebase.auth().signInWithRedirect(provider);
     } else {
+      // na komputerze popup
       fbauth = firebase.auth().signInWithPopup(provider);
     }
     firebase
       .auth()
       .setPersistence(firebase.auth.Auth.Persistence.SESSION)
       .then(function () {
-        return fbauth
-          .then(function (user) {
-            sessionStorage.setItem("islogged", true);
-            app.setState({
-              islogged: true,
-              username: user.displayName,
-              id: user.uid,
-              userpic: user.photoURL,
-            });
-          })
-          .catch(function (error) {
-            app.setState({ valid: false, error: error.message });
-            console.log(error);
-          });
+        return fbauth.catch(function (error) {
+          // nie ma potrzeby aktualizacji state o uzytkowniku poniewaz funkcja w componentdidmount to zrobi
+          app.setState({ valid: false, error: error.message }); // jesli wystapi blad w autoryzacji, zostanie wyswietlony
+          console.log(error);
+        });
       });
   }
 
@@ -131,18 +134,22 @@ class App extends Component {
     // console.log(this.refs.interface);
     firebase.auth().onAuthStateChanged((user) => {
       if (this.state.register) {
+        // tryb rejestracji
       } else {
         if (user) {
-          sessionStorage.setItem("islogged", true);
+          // uzytkownik zalogowany
+          sessionStorage.setItem("islogged", true); // zapisanie stanu zalogowania w sessionstorage
           app.setState({
+            // wczytanie informacji o uzytkowniku do state
             islogged: true,
             username: user.displayName,
             userid: user.uid,
             userpic: user.photoURL,
           });
-          app.refs.interface.getRoomsOnAuth(user);
+          app.refs.interface.getRoomsOnAuth(user); // wywolanie funkcji do wczytania pokojów
         } else {
-          sessionStorage.setItem("islogged", false);
+          // uzytkownik niezalogowany
+          sessionStorage.setItem("islogged", false); // zapisanie stanu zalogowania w sessionstorage
           app.setState({ islogged: false });
         }
       }
@@ -153,8 +160,9 @@ class App extends Component {
     let islogged = sessionStorage.getItem("islogged");
     return (
       <div>
+        {/* renderowanie warunkowe w zaleznosci od stanu zalogowania */}
         {islogged === "true" ? (
-          <Interface
+          <Interface // komponent widocznyh po zalogowaniu (podstrona)
             ref="interface"
             userpic={this.state.userpic}
             storage={storage}
@@ -164,7 +172,7 @@ class App extends Component {
             username={this.state.username}
           />
         ) : (
-          <Login
+          <Login // ekran logowania
             fblogin={this.handleFbLogin}
             err={this.state.error}
             valid={this.state.valid}

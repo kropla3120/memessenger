@@ -20,7 +20,7 @@ export class Joiner extends Component {
   Join() {
     let thisc = this;
     const db = this.props.db;
-    db.collection("rooms")
+    db.collection("rooms") // dodanie uzytkownika do pokoju w bazie danych
       .doc(this.state.id)
       .update({
         users: firebase.firestore.FieldValue.arrayUnion(thisc.props.id),
@@ -62,10 +62,12 @@ export class Joiner extends Component {
               <Form.Control
                 id="myInput"
                 onChange={(e) => this.setState({ id: e.target.value })}
-                onKeyDown={(e)=>{if(e.key==='Enter'){
-                  e.preventDefault();
-                  this.Join()
-                }}}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    this.Join();
+                  }
+                }}
                 type="text"
                 placeholder=""
               />

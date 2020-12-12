@@ -1,9 +1,8 @@
 import React, { Component, Suspense } from "react";
 // import Alert from 'react-bootstrap/Alert'
-import Button from "react-bootstrap/Button";
-import Loading from './Loading'
+import Loading from "./Loading";
 import ListRooms from "./ListRooms";
-import Card from "react-bootstrap/Card";
+import { Card, Button } from "react-bootstrap";
 import { MobileView } from "react-device-detect";
 const Creater = React.lazy(() => import("./CreateRoomModal"));
 const Joiner = React.lazy(() => import("./JoinRoomModal"));
@@ -20,16 +19,10 @@ export class Sidebar extends Component {
   }
 
   render() {
-    // let activeuser
-    // if(this.state){
-    //     activeuser = this.state.activeUsers.map((user)=>{
-    //         return(<Alert key={user} style={{backgroundColor: '#545b62'}} variant='secondary'>{user}</Alert>)})
-    // }else{
-    //     activeuser = <Loading />
-    // }
     return (
       <div className="sidebar" style={{ marginTop: "1rem" }}>
         <MobileView>
+          {/* na telefonie nazwa uzytkonika i przycisk wylogowania znajduje sie w panelu bocznym a nie nawigacji */}
           <h5>Logged in as: {this.props.username}</h5>
           <Button
             onClick={this.props.logout}
@@ -40,7 +33,7 @@ export class Sidebar extends Component {
           </Button>
         </MobileView>
         <h3>Your chats</h3>
-        <ListRooms
+        <ListRooms //komponent listy pokoi uzytkownika
           id={this.props.id}
           lastmessages={this.props.lastmessages}
           db={this.props.db}
@@ -75,6 +68,7 @@ export class Sidebar extends Component {
         <div style={{ paddingTop: "1rem" }}>
           <h3>Share</h3>
           <Card bg="primary" style={{ color: "white" }}>
+            {/* niebieska karta z id pokoju */}
             <Card.Header>
               <h5 style={{ marginBottom: 0 }}>
                 {" "}
@@ -88,8 +82,8 @@ export class Sidebar extends Component {
             </Card.Body>
           </Card>
         </div>
-        <Suspense fallback={<Loading/>}>
-          <Creater
+        <Suspense fallback={<Loading />}>
+          <Creater // panel tworzenia pokoju
             update={this.props.update}
             id={this.props.id}
             db={this.props.db}
@@ -98,8 +92,8 @@ export class Sidebar extends Component {
             onHide={() => this.setState({ showcreate: false })}
           />
         </Suspense>
-        <Suspense fallback={<Loading/>}>
-          <Joiner
+        <Suspense fallback={<Loading />}>
+          <Joiner // panel dolaczania do pokoju
             update={this.props.update}
             id={this.props.id}
             db={this.props.db}

@@ -2,38 +2,17 @@ import React, { Component } from "react";
 import Input from "./Input";
 import Messages from "./Messages";
 import Nav from "./Nav";
-import Row from "react-bootstrap/Row";
-import Container from "react-bootstrap/Container";
-import Col from "react-bootstrap/Col";
 import SidebarComp from "./SidebarComp";
 import SidebarRight from "./SidebarRight";
 import Sidebar from "react-sidebar";
+import { Col, Row, Container } from "react-bootstrap";
 import { BrowserView, MobileView } from "react-device-detect";
 import Dropzone from "react-dropzone";
 const audio = new Audio("not.mp3");
 
-// const NoInputLayout = ({ previews, submitButton, dropzoneProps, files }) => {
-//   return (
-//     <div {...dropzoneProps}>
-//       {files.length === 0 && (
-//         <span
-//           className={defaultClassNames.inputLabel}
-//           style={{ cursor: "unset" }}
-//         >
-//           Only Drop Files (No Input)
-//         </span>
-//       )}
-
-//       {previews}
-
-//       {files.length > 0 && submitButton}
-//     </div>
-//   );
-// };
-
 export class Interface extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       userid: "",
       currentRoom: "default",
@@ -50,26 +29,31 @@ export class Interface extends Component {
   }
 
   scrollToBottom = () => {
+    // zjedz w dol przy nowej wiadomosci
     if (this.messagesEnd) {
       this.messagesEnd.scrollIntoView({ behavior: "smooth" });
     }
   };
   getRoomsOnAuth(user) {
+    //funkcja wywolowyana z komponentu app po zalogowaniu
     const db = this.props.db;
     const inter = this;
     db.collection("rooms")
-      .where("users", "array-contains", user.uid)
+      .where("users", "array-contains", user.uid) //wyszukanie w bazie danych pokoi ktore zawierają użytkownika
       .get()
       .then((myrooms) => {
+        // poaczatkowe wczytanie wszystkich pokoi uzytkownika
         let arr = myrooms.docs.map((doc) => {
           return { roomid: doc.id, roomname: doc.data().roomname };
         });
-        inter.setState({ myRooms: arr });
+        inter.setState({ myRooms: arr }); // aktualizacja state z lista pokoi
         inter.subscribe();
       });
     db.collection("rooms")
       .where("users", "array-contains", user.uid)
       .onSnapshot((myrooms) => {
+        // subskybcja do pokoi w ktorych sie znajdujemy
+        // wykonywane po dodaniu uzytkownika do nowego pokoju
         let arr = myrooms.docs.map((doc) => {
           return { roomid: doc.id, roomname: doc.data().roomname };
         });
@@ -78,11 +62,13 @@ export class Interface extends Component {
   }
 
   subscribetoNew(roomid) {
+    //wykonywane tylko gdy uzytkownik utowrzy lub dolaczy do pokoju
     const db = this.props.db;
     let roomname = "room_" + roomid;
     let messdb = db.collection("rooms").doc(roomid).collection("messages");
     const inter = this;
     this.setState((prevState) => ({
+      // utworzenie lastmessages dla nowo utowrzonego pokoju
       lastmessages: {
         ...prevState.lastmessages,
         [roomid]: { content: "No messages" },
@@ -92,9 +78,12 @@ export class Interface extends Component {
       .orderBy("id", "desc")
       .limit(1)
       .onSnapshot(
+        //subskrybcja dla nowo przychodzących wiadomosci w nowym pokoju
         (data) => {
+          //wykonowyane po przyjsciu wiadomosci
           if (data.docs.length !== 0) {
             if (data.docs[0].data().pic === true) {
+              // jesli wiadmosc jest obrazkiem
               inter.setState((prevState) => ({
                 lastmessages: {
                   ...prevState.lastmessages,
@@ -105,6 +94,7 @@ export class Interface extends Component {
                 },
               }));
             } else {
+              // dodanie najnowszej wiadomsoci do lastmessages
               inter.setState((prevState) => ({
                 lastmessages: {
                   ...prevState.lastmessages,
@@ -113,34 +103,30 @@ export class Interface extends Component {
               }));
             }
             if (inter.state[roomname]) {
+              //jesli pokoj istnieje w pamieci
               inter.setState({
-                [roomname]: inter.state[roomname].concat(data.docs[0].data()),
+                [roomname]: inter.state[roomname].concat(data.docs[0].data()), // dodanie do tablicy najnowszej wiadomosci
               });
-              inter.scrollToBottom();
-              audio.play();
+              inter.scrollToBottom(); //scroll na sam dol
+              audio.play(); //dzwiek powiadomienia
             } else {
+              //jesli w pokoju nie bylo wczesniejszych wiadomosci
               inter.setState({ [roomname]: [data.docs[0].data()] });
             }
           }
-          // else{
-          //   inter.setState((prevState) => ({
-          //     lastmessages: {
-          //       ...prevState.lastmessages,
-          //       [roomid]: {content: "No messages"},
-          //     },
-          //   }));
-          // }
         },
         (err) => {
-          console.log(err);
+          console.error(err);
         }
       );
   }
 
   subscribe() {
+    // wykonywana po wczytaniu pokoi uzytknownika
     const db = this.props.db;
     const inter = this;
     this.state.myRooms.forEach((room) => {
+      // dla kazdego pokoju wykonujemy ta funkcje
       let messdb = db
         .collection("rooms")
         .doc(room.roomid)
@@ -151,6 +137,7 @@ export class Interface extends Component {
         .orderBy("id", "desc")
         .limit(1)
         .onSnapshot(
+          // subskrybcja do nowo przychodzacych wiadomsci w tym pokoju
           (data) => {
             if (data.docs.length !== 0) {
               if (data.docs[0].data().pic === true) {
@@ -193,9 +180,7 @@ export class Interface extends Component {
   componentDidUpdate() {
     this.scrollToBottom();
   }
-  componentDidMount() {
-    console.log(this.refs.input);
-  }
+  componentDidMount() {}
   update() {
     this.setState({ ["room_" + this.state.currentRoom]: [] });
   }
@@ -208,10 +193,11 @@ export class Interface extends Component {
     return (
       <div>
         <MobileView>
+          {/* wysuwany z boku panel na telefonach */}
           <Sidebar
             sidebar={
               <div className="container">
-                <SidebarComp
+                <SidebarComp // komponent z sidebarem
                   logout={this.props.logout}
                   username={this.props.username}
                   lastmessages={this.state.lastmessages}
@@ -233,7 +219,7 @@ export class Interface extends Component {
           </Sidebar>
         </MobileView>
 
-        <Nav
+        <Nav // nawigacja strony
           username={this.props.username}
           logout={this.props.logout}
           sidebar={() => {
@@ -241,10 +227,11 @@ export class Interface extends Component {
           }}
         />
         <Container id="interface">
+          {/* wersja na komputer */}
           <BrowserView>
             <Row>
               <Col style={{ maxWidth: "20vw" }} id="side">
-                <SidebarComp
+                <SidebarComp // komponent z sidebarem
                   lastmessages={this.state.lastmessages}
                   update={this.subscribetoNew}
                   id={this.props.id}
@@ -260,7 +247,7 @@ export class Interface extends Component {
                   noClick={true}
                   // noKeyboard={true}
                   onDrop={(acceptedFiles) => {
-                    this.refs.input.uploadFile(acceptedFiles[0]);
+                    this.refs.input.uploadFile(acceptedFiles[0]); // wysylanie zdjec poprzez dropzone
                     console.log(acceptedFiles);
                     // console.log(this.refs.input);
                   }}
@@ -271,14 +258,15 @@ export class Interface extends Component {
 
                       <div id="messages" className="container">
                         {this.state.finished === true && (
-                          <Messages
+                          //jesli pokoje i wiadomosci zostaly wczytane
+                          <Messages // komponent zawierajacy wszystkie wiadomosci
                             saveMessages={(roomname, roomcontent) => {
                               this.setState({
                                 ["room_" + roomname]: roomcontent,
                               });
                             }}
                             messages={
-                              this.state["room_" + this.state.currentRoom]
+                              this.state["room_" + this.state.currentRoom] //adres w state zawierajacy wiadomosci danego pokoju
                             }
                             key={this.state.currentRoom}
                             db={this.props.db}
@@ -287,7 +275,7 @@ export class Interface extends Component {
                             username={this.props.username}
                           />
                         )}
-                        <div
+                        <div // ukryty div uzywany do scrollowania na spod
                           style={{ float: "left", clear: "both" }}
                           ref={(el) => {
                             this.messagesEnd = el;
@@ -297,7 +285,7 @@ export class Interface extends Component {
                     </div>
                   )}
                 </Dropzone>
-                <Input
+                <Input // komponent do wpisywania wiadomosci
                   ref="input"
                   userpic={this.props.userpic}
                   storage={this.props.storage}
@@ -312,10 +300,11 @@ export class Interface extends Component {
               </Col>
             </Row>
           </BrowserView>
+          {/* wersja na telefon */}
           <MobileView>
             <div id="messages">
               {this.state.finished === true && (
-                <Messages
+                <Messages // komponent z wiadomosciami
                   saveMessages={(roomname, roomcontent) => {
                     this.setState({ ["room_" + roomname]: roomcontent });
                   }}
@@ -334,7 +323,7 @@ export class Interface extends Component {
                 }}
               ></div>
             </div>
-            <Input
+            <Input // komponent do wpisywania wiadomosci
               ref="input"
               userpic={this.props.userpic}
               storage={this.props.storage}

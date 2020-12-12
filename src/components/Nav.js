@@ -21,7 +21,7 @@ export class Nav extends Component {
         </Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
-          {/* desktop */}
+          {/* komputer */}
           <BrowserView>
             <Button
               onClick={this.props.logout}
@@ -44,7 +44,7 @@ export class Nav extends Component {
             </Button>
           </BrowserView>
 
-          {/* mobile */}
+          {/* telefon */}
           <MobileView>
             <Button
               id="accbtn"
@@ -55,8 +55,8 @@ export class Nav extends Component {
             </Button>
           </MobileView>
         </Navbar.Collapse>
-        <Suspense fallback={<Loading/>}>
-          <AccSettings
+        <Suspense fallback={<Loading />}>
+          <AccSettings //komponent z ustawieniami konta
             show={this.state.showSettings}
             onHide={() => {
               this.setState({ showSettings: false });

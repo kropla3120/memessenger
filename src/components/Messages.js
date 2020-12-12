@@ -3,8 +3,8 @@ import Message from "./Message";
 import Loading from "./Loading";
 
 export class Messages extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       messages: [],
     };
@@ -19,11 +19,13 @@ export class Messages extends Component {
       .collection("messages");
     if (this.props.messages && this.props.messages.length > 1) {
     } else {
+      //jesli nie ma wiadomosci z danego pokoju zapisanych w pamieci
       messdb.get().then((messages) => {
+        // pobranie wiadomosci z danego pokoju
         let array = messages.docs.map((message) => {
           return message.data();
         });
-        mes.props.saveMessages(mes.props.room, array);
+        mes.props.saveMessages(mes.props.room, array); // zapisanie wiadomosci w komponencie wyzej
       });
     }
   }
@@ -34,7 +36,7 @@ export class Messages extends Component {
   render() {
     if (this.props.messages) {
       return this.props.messages.map((msg) => (
-        <Message
+        <Message //komponent pojedynczej wiadomosci
           key={msg.id}
           message={msg.content}
           date={msg.id}
