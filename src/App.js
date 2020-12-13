@@ -4,10 +4,9 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
 import "firebase/messaging";
-import "react-bootstrap";
-import Login from "./components/Login";
 import Interface from "./components/Interface";
 import { isMobile } from "react-device-detect";
+import LandingPage from "./components/LandingPage";
 
 const firebaseConfig = {
   //konfiguracja projektu firebase
@@ -24,9 +23,7 @@ var db = firebase.firestore();
 const messaging = firebase.messaging();
 var storage = firebase.storage();
 var provider = new firebase.auth.FacebookAuthProvider();
-messaging.usePublicVapidKey(
-  "BA3_8NAH-mcmZ3XExCxm_-Y-Frr6df87DmLhehR10IfyBpZKLnC8afb56jgcCPLuH0_lXEj0fdr_6ZE_KdAMKks"
-);
+messaging.usePublicVapidKey("BA3_8NAH-mcmZ3XExCxm_-Y-Frr6df87DmLhehR10IfyBpZKLnC8afb56jgcCPLuH0_lXEj0fdr_6ZE_KdAMKks");
 
 class App extends Component {
   constructor() {
@@ -133,9 +130,7 @@ class App extends Component {
     let app = this;
     // console.log(this.refs.interface);
     firebase.auth().onAuthStateChanged((user) => {
-      if (this.state.register) {
-        // tryb rejestracji
-      } else {
+      if (!this.state.register) {
         if (user) {
           // uzytkownik zalogowany
           sessionStorage.setItem("islogged", true); // zapisanie stanu zalogowania w sessionstorage
@@ -172,7 +167,7 @@ class App extends Component {
             username={this.state.username}
           />
         ) : (
-          <Login // ekran logowania
+          <LandingPage // ekran logowania
             fblogin={this.handleFbLogin}
             err={this.state.error}
             valid={this.state.valid}

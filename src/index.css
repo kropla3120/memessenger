@@ -1,27 +1,21 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont,  'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #18191a;
-  color: #ced1d5
+  color: #ced1d5;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
-#form{
+#form {
   width: 50vw;
   min-width: 300px;
   max-width: 500px;
-  justify-content: center;
-  align-content: center;
   padding-top: 10%;
   padding-bottom: 10%;
-  position: relative;
 }
 /* #loginrow{
   position: absolute;
@@ -31,22 +25,22 @@ code {
   display: flex;
   justify-content: center;
 } */
-#tsparticles{
+#tsparticles {
   position: absolute;
-  top: 0px
+  top: 0px;
 }
-#account{
+#account {
   display: block;
   font-size: 2rem;
   margin-left: 0;
   margin-right: 0;
 }
-#accbtn{
+#accbtn {
   margin-left: 1rem;
   padding: 1px 1px;
   border: 0px;
 }
-#header{
+#header {
   justify-content: center;
   text-align: center;
   position: relative;
@@ -60,7 +54,7 @@ ion-icon {
   font-size: 20px;
   margin-right: 5px;
 }
-#userpic{
+#userpic {
   height: max-content;
   margin-left: 1rem;
   margin-right: 1rem;
@@ -68,21 +62,21 @@ ion-icon {
   border-radius: 50%;
   /* width: 3rem; */
 }
-#sub{
+#sub {
   justify-content: center;
   width: 100%;
 }
-#message{
+#message {
   width: fit-content;
   max-width: 60vw;
   /* float: right; */
 }
-#messageself{
+#messageself {
   width: fit-content;
   max-width: 60vw;
   /* float: right; */
 }
-#messages{
+#messages {
   overflow: auto;
   top: 2vh;
   bottom: 2vh;
@@ -92,87 +86,85 @@ ion-icon {
   align-items: center;
   position: relative;
   align-content: center;
-
 }
-#input{
+#input {
   top: 3rem;
   width: 50vw;
   justify-content: center;
   align-content: center;
   position: relative;
-
 }
-#row{
+#row {
   bottom: 10px;
 }
 @media only screen and (max-width: 1000px) {
   #navlogo {
     font-size: 2rem !important;
   }
-  #form{
+  #form {
     top: 100pt;
     width: 80vw;
   }
-  #input{
+  #input {
     min-width: 100%;
     width: 100%;
   }
-  #messages{
+  #messages {
     min-width: 100%;
     width: 100%;
   }
 }
-#navlogo{
+#navlogo {
   font-size: 3rem;
   font-weight: 150 !important;
   color: white;
 }
-#nav{
+#nav {
   background-color: #242526;
   border-bottom: 1px solid #393a3b;
 }
 #file {
-	width: 0.1px;
-	height: 0.1px;
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
 }
-#filebtn{
+#filebtn {
   margin-bottom: 0;
   display: flex;
   align-items: center;
 }
-.row{
+.row {
   margin-right: 0;
   margin-left: 0;
 }
-#interface{
+#interface {
   max-width: 100% !important;
 }
-#myInput{
+#myInput {
   background-color: #3e4042;
   color: #e5e5e5;
   border: none;
 }
-.sidebar{
+.sidebar {
   color: #b0b3b8;
   margin-top: 2rem;
   max-width: 70vw;
   /* padding-left: 15px;
   padding-right: 15px; */
 }
-#msgpic{
+#msgpic {
   max-width: 100%;
   max-height: 30vh;
   border-radius: 0.5rem;
   top: 5vh;
 }
-.input-group-append{
+.input-group-append {
   z-index: 0;
 }
-#fullpic{
+#fullpic {
   height: auto;
   max-width: 100%;
   max-height: 100%;
@@ -180,78 +172,78 @@ ion-icon {
   border-radius: 0.5rem;
 }
 
-#login{
+#login {
   margin-top: 1rem;
 }
-#self{
+#self {
   display: flex;
   justify-content: flex-end !important;
 }
-#joinc{
-  width:48%;
+#joinc {
+  width: 48%;
 }
-#ahref{
+#ahref {
   display: flex;
   justify-content: center;
   padding-top: 1vh;
 }
-.modal-content{
+.modal-content {
   background-color: #242526;
   border: 1px solid #393a3b;
   color: white;
   border-radius: 0.5rem;
 }
-.modal-header{
+.modal-header {
   background-color: #18191a;
-  border-bottom: 1px solid #393a3b!important;
+  border-bottom: 1px solid #393a3b !important;
 }
-.modal-footer{
-  border-top: 1px solid #393a3b!important;;
+.modal-footer {
+  border-top: 1px solid #393a3b !important;
 }
-.fullview{
-  background-color: none!important;
+.fullview {
+  background-color: none !important;
 }
-.modal-dialog{
-  background-color: none!important;
+.modal-dialog {
+  background-color: none !important;
 }
-#modal{
+#modal {
   justify-content: center;
 }
-.close{
-  color: white
+.close {
+  color: white;
 }
-body.modal-open #root{
+body.modal-open #root {
   -webkit-filter: blur(5px);
   -moz-filter: blur(5px);
   -o-filter: blur(5px);
   -ms-filter: blur(5px);
   filter: blur(5px);
 }
-.alert-secondary{
+.alert-secondary {
   background-color: #737678;
   border: none;
   color: white;
 }
-.alert-primary{
+.alert-primary {
   background-color: #57a6f9;
   border: none;
   border-radius: 0.5rem;
 }
-.kep-login-facebook{
+.kep-login-facebook {
   width: 100%;
-  font-family: unset!important;
-  font-weight: unset!important;
-  text-transform: none!important;
+  font-family: unset !important;
+  font-weight: unset !important;
+  text-transform: none !important;
   margin-top: 1rem;
-  border-radius: 0.25rem!important;
-  padding: 0.375rem 0.75rem!important;
+  border-radius: 0.25rem !important;
+  padding: 0.375rem 0.75rem !important;
 }
-#grupy{
+#grupy {
   max-height: 50vh;
   overflow: auto;
   display: block;
 }
-.toast-body{
+.toast-body {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
