@@ -66,8 +66,7 @@ ion-icon {
 }
 #messages {
   overflow: auto;
-  top: 2vh;
-  bottom: 2vh;
+  margin-top: 1rem;
   width: 50vw;
   height: 70vh;
 }
