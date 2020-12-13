@@ -17,14 +17,7 @@ code {
   padding-top: 10%;
   padding-bottom: 10%;
 }
-/* #loginrow{
-  position: absolute;
-  top: 40vh;
-}
-#login-root{
-  display: flex;
-  justify-content: center;
-} */
+
 #tsparticles {
   position: absolute;
   top: 0px;
@@ -41,10 +34,8 @@ code {
   border: 0px;
 }
 #header {
-  justify-content: center;
   text-align: center;
   position: relative;
-  /* top: 10px; */
   bottom: 1rem;
   padding: 2vh;
   font-size: 3rem;
@@ -58,23 +49,20 @@ ion-icon {
   height: max-content;
   margin-left: 1rem;
   margin-right: 1rem;
-  /* margin: 0.3rem; */
   border-radius: 50%;
-  /* width: 3rem; */
 }
 #sub {
-  justify-content: center;
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
 #message {
   width: fit-content;
   max-width: 60vw;
-  /* float: right; */
 }
 #messageself {
   width: fit-content;
   max-width: 60vw;
-  /* float: right; */
 }
 #messages {
   overflow: auto;
@@ -82,16 +70,10 @@ ion-icon {
   bottom: 2vh;
   width: 50vw;
   height: 70vh;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  align-content: center;
 }
 #input {
   top: 3rem;
   width: 50vw;
-  justify-content: center;
-  align-content: center;
   position: relative;
 }
 #row {
@@ -99,7 +81,7 @@ ion-icon {
 }
 @media only screen and (max-width: 1000px) {
   #navlogo {
-    font-size: 2rem !important;
+    font-size: 2rem;
   }
   #form {
     top: 100pt;
@@ -116,7 +98,7 @@ ion-icon {
 }
 #navlogo {
   font-size: 3rem;
-  font-weight: 150 !important;
+  font-weight: 150;
   color: white;
 }
 #nav {
@@ -141,7 +123,7 @@ ion-icon {
   margin-left: 0;
 }
 #interface {
-  max-width: 100% !important;
+  max-width: 100%;
 }
 #myInput {
   background-color: #3e4042;
@@ -177,7 +159,7 @@ ion-icon {
 }
 #self {
   display: flex;
-  justify-content: flex-end !important;
+  justify-content: flex-end;
 }
 #joinc {
   width: 48%;
@@ -195,16 +177,16 @@ ion-icon {
 }
 .modal-header {
   background-color: #18191a;
-  border-bottom: 1px solid #393a3b !important;
+  border-bottom: 1px solid #393a3b;
 }
 .modal-footer {
-  border-top: 1px solid #393a3b !important;
+  border-top: 1px solid #393a3b;
 }
 .fullview {
-  background-color: none !important;
+  background-color: none;
 }
 .modal-dialog {
-  background-color: none !important;
+  background-color: none;
 }
 #modal {
   justify-content: center;
@@ -231,12 +213,12 @@ body.modal-open #root {
 }
 .kep-login-facebook {
   width: 100%;
-  font-family: unset !important;
-  font-weight: unset !important;
-  text-transform: none !important;
+  font-family: unset;
+  font-weight: unset;
+  text-transform: none;
   margin-top: 1rem;
-  border-radius: 0.25rem !important;
-  padding: 0.375rem 0.75rem !important;
+  border-radius: 0.25rem;
+  padding: 0.375rem 0.75rem;
 }
 #grupy {
   max-height: 50vh;
