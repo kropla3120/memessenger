@@ -25,26 +25,28 @@ export class Input extends Component {
       userpic: this.props.userpic,
     };
     var thisc = this;
-    if (data.content === "/clear") {
-      // jesli wpisano /clear wyczysc wiadomosci z bazy danych
-      db.collection("rooms")
-        .doc(this.props.room)
-        .collection("messages")
-        .get()
-        .then((col) => {
-          col.docs.forEach((doc) => {
-            doc.ref.delete();
+    if (data.content !== "") {
+      if (data.content === "/clear") {
+        // jesli wpisano /clear wyczysc wiadomosci z bazy danych
+        db.collection("rooms")
+          .doc(this.props.room)
+          .collection("messages")
+          .get()
+          .then((col) => {
+            col.docs.forEach((doc) => {
+              doc.ref.delete();
+            });
+            thisc.props.clear();
           });
-          thisc.props.clear();
-        });
-    } else {
-      db.collection("rooms") // wyslij wiadomosc do bazy danych
-        .doc(this.props.room)
-        .collection("messages")
-        .doc("message_" + Date.now())
-        .set(data);
+      } else {
+        db.collection("rooms") // wyslij wiadomosc do bazy danych
+          .doc(this.props.room)
+          .collection("messages")
+          .doc("message_" + Date.now())
+          .set(data);
+      }
+      this.setState({ message: "" });
     }
-    this.setState({ message: "" });
   }
 
   uploadFile = (file) => {

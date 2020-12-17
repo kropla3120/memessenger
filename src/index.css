@@ -94,6 +94,9 @@ ion-icon {
     min-width: 100%;
     width: 100%;
   }
+  #grupy {
+    width: 100%;
+  }
 }
 #navlogo {
   font-size: 3rem;
@@ -133,8 +136,8 @@ ion-icon {
   color: #b0b3b8;
   margin-top: 2rem;
   max-width: 70vw;
-  /* padding-left: 15px;
-  padding-right: 15px; */
+  min-width: 10rem;
+  margin: 1rem;
 }
 #msgpic {
   max-width: 100%;
@@ -220,6 +223,7 @@ body.modal-open #root {
   padding: 0.375rem 0.75rem;
 }
 #grupy {
+  min-width: 15vw;
   max-height: 50vh;
   overflow: auto;
   display: block;
@@ -228,4 +232,5 @@ body.modal-open #root {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  width: 20rem;
 }

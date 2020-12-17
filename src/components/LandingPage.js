@@ -41,7 +41,7 @@ export class LandingPage extends Component {
         />
         <NavLandingPage login={() => this.setState({ modalShow: true })} />
         <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
-          <Row style={{ width: "80%", color: "white", marginTop: "3rem" }}>
+          <Row style={{ width: "80vw", color: "white", marginTop: "3rem" }}>
             <Col md="4" style={{ textAlign: "center", margin: "auto" }}>
               <h1 style={{ fontWeight: "300", fontSize: this.font(), padding: "1rem" }}>Memessenger, best place to send memes to your friends or communities.</h1>
               <Button style={{ padding: "10px", fontSize: "1.5rem" }} block variant="primary" onClick={() => this.setState({ modalShow: true })}>
@@ -59,7 +59,7 @@ export class LandingPage extends Component {
           </Row>
           <Slide duration="500" distance="50px" bottom>
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <Row style={{ width: "80%", color: "white", marginTop: "3rem" }}>
+              <Row style={{ width: "80vw", color: "white", marginTop: "3rem" }}>
                 <Col md="4" style={{ textAlign: "center", margin: "auto" }}>
                   <h1 style={{ fontWeight: "300", fontSize: this.font() }}>Create rooms for diffrent topics or diffrent communities</h1>
                 </Col>
@@ -71,7 +71,7 @@ export class LandingPage extends Component {
           </Slide>
           <Slide duration="500" distance="50px" bottom>
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <Row style={{ width: "80%", color: "white", marginTop: "3rem" }}>
+              <Row style={{ width: "80vw", color: "white", marginTop: "3rem" }}>
                 <Col md="4" style={{ textAlign: "center", margin: "auto" }}>
                   <h1 style={{ fontWeight: "300", fontSize: this.font() }}>Share the rooms to anyone easily with one simple code</h1>
                 </Col>

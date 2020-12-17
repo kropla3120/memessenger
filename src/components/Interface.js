@@ -127,10 +127,7 @@ export class Interface extends Component {
     const inter = this;
     this.state.myRooms.forEach((room) => {
       // dla kazdego pokoju wykonujemy ta funkcje
-      let messdb = db
-        .collection("rooms")
-        .doc(room.roomid)
-        .collection("messages");
+      let messdb = db.collection("rooms").doc(room.roomid).collection("messages");
       let roomname = "room_" + room.roomid;
       inter.setState({ subscribed: inter.state.subscribed.concat(roomname) });
       messdb
@@ -245,7 +242,7 @@ export class Interface extends Component {
               <Col xs={8}>
                 <Dropzone
                   noClick={true}
-                  // noKeyboard={true}
+                  noKeyboard={true}
                   onDrop={(acceptedFiles) => {
                     this.refs.input.uploadFile(acceptedFiles[0]); // wysylanie zdjec poprzez dropzone
                     console.log(acceptedFiles);
