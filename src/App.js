@@ -44,7 +44,6 @@ class App extends Component {
     this.logout = this.logout.bind(this);
   }
 
-  componentWillUnmount() {}
 
   logout() {
     firebase
